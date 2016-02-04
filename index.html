@@ -16,6 +16,7 @@
       <a href="https://github.com/santojon/Dogefy" class="btn">View on GitHub</a>
       <a href="https://github.com/santojon/Dogefy/zipball/master" class="btn">Download .zip</a>
       <a href="https://github.com/santojon/Dogefy/tarball/master" class="btn">Download .tar.gz</a>
+      <a href=#dogefyExample" class="btn">Give it a try!</a>
     </section>
 
     <section class="main-content">
@@ -465,6 +466,50 @@ Like this:</p>
 
     </section>
 
-  
+  <div id="dogefyExample">
+    <h1 class="txt">Dogefy Example</h1>
+		<div id="doge" class="doge">
+			<p>oh my mattis! txt me, want layout. so dolor, want word, many word! much sit! very design! such adipiscing! oh my doge. rate me! much ipsum! need design! such adipiscing! oh my doge. very full, i iz cute?. want word, wow, such consectetur! so elit. want design. wow! want design. oh my mattis! need design! much sit! wow. oh my doge. very swag! such full.</p>
+
+			<p><img src="doge.jpg" class="image"></p>
+
+			<p>such consectetur! go doge! rate me! plz lorem. go doge! much layout! such lorem! very lorem, so elit. much text! much sit! wow, many aenean. many aenean. oh my doge. such adipiscing! much text, much sit! such consectetur! such consectetur!need design! many word! such lorem! so swag, wow! much ipsum! many aenean. many word! plz lorem. go ipsum, go ipsum, plz ipsum! yes master doge.</p>
+		</div>
+		<button id="btn" class="btn">Bark once!</button>
+		<button id="btn2" class="btn">Bark a lot!</button>
+		<button id="btn3" class="btn btn-red">Clear some barks</button>
+		<script type="text/javascript" src="https://raw.githubusercontent.com/santojon/Dogefy/master/dist/dogefy.min.js"></script>
+		<script type="text/javascript">
+			(function() {
+				// Alternate method
+			   	var doge = document.getElementById('doge').dogefy({
+					barkOn: ['click', 'mouseover'],
+					barkDelay: 50,
+					barkInterval: 500,
+					barkDuration: -1,
+					barkFrom: document.getElementById('btn'),
+					clearWhen: function(callBack) {
+						var btn = document.getElementById('btn3');
+						btn.addEventListener('click', function() {
+							callBack();
+						});
+					},
+					manyBarkWhen: function(callBack) {
+						var alot = document.getElementById('btn2');
+						alot.addEventListener('click', function() {
+							if (alot.innerHTML === 'Bark a lot!') {
+								alot.innerHTML = 'Stop barking!';
+								alot.style.backgroundColor = 'red';
+							} else {
+								alot.innerHTML = 'Bark a lot!';
+								alot.style.backgroundColor = 'green';
+							}
+							callBack();
+						});
+					}
+				});
+			})();
+		</script>
+  </div>
   </body>
 </html>
