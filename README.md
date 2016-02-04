@@ -29,6 +29,14 @@
 
 ## Usage
 You can make any DOM node a doge that barks.  
+To use it in your code, just add:
+
+> ```html
+>   <script type="text/javascript"
+>      src="https://raw.githubusercontent.com/santojon/Dogefy/master/dist/dogefy.min.js">
+>   </script>
+> ```
+
 To dogefy an element, you have two ways:
 
 > ```javascript
