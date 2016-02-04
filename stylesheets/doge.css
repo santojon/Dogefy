@@ -1,14 +1,9 @@
-body {
-	font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
-	font-weight: bold;
-}
-
-p {
+#dogefyExample p {
 	float: left;
 	margin: 15px;
 }
 
-.doge {
+#dogefyExample .doge {
 	border: 2px solid #000000;
 	background-color: silver;
 	border-radius: .25rem;
@@ -34,12 +29,12 @@ p {
     border-color: green;
 }
 
-.btn-red {
+#dogefyExample .btn-red {
 	background-color: red !important;
     border-color: red !important;
 }
 
-.txt {
+#dogefyExample .txt {
 	font-size: 2em;
 	margin: 0.67em 0;
 	line-height: 1.2857em;
@@ -49,13 +44,13 @@ p {
 	font-size: 2rem;
 }
 
-.container {
+#dogefyExample .container {
 	float: left;
 	width: 90%;
 	margin-left: 5%;
 }
 
-.image {
+#dogefyExample .image {
 	float: left;
 	width: 80%;
 	margin-left: 130%;
