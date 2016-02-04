@@ -24,7 +24,7 @@
 
 
 ## Licensing
-	- Apache License 2.0 (Included). See file LICENSE.txt.
+	- Apache License 2.0 (Included). See 'LICENSE' file.
 
 
 ## Usage
