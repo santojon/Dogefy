@@ -1,20 +1,13 @@
-| <h1>Dogefy</h1> |
+| <h1>Dogefy</h1> **v0.1 (beta)** |
 :-----------------:
 | A JS lib to make your DOM bark! |
 | <img src="screenshot.jpg" title="Dogefy screenshot"/> |
 
 
 ## Library proposal
-
-| Dogefy assists to make any DOM element barks like the doge, putting doge phrases in screen. |
-:---------------------------------------------------------------------------------------------:
-| You can make it barks! wow! such dogefy! |
-| You can make it barks a lot too! amaze! |
-| *And other incredible features! |
-
-```
-*Other of the functionalities are also related with library usage things.
-```
+Dogefy assists to make any DOM element barks like the doge, putting doge phrases in screen.  
+You can make it barks! wow! such dogefy!  
+You can make it barks a lot too! amaze!
 
 
 ## Related dependencies and concerns
@@ -24,7 +17,7 @@
 
 
 ## Licensing
-	- Apache License 2.0 (Included). See 'LICENSE' file.
+    - Apache License 2.0 (Included). See 'LICENSE' file.
 
 
 ## Usage
