@@ -17,7 +17,7 @@ p {
 	min-height: 450px;
 }
 
-.btn {
+#dogefyExample .btn {
     display: inline-block;
     padding: .375rem 1rem;
     font-size: 1rem;
