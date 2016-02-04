@@ -17,7 +17,7 @@
       <a href="https://github.com/santojon/Dogefy" class="btn">View on GitHub</a>
       <a href="https://github.com/santojon/Dogefy/zipball/master" class="btn">Download .zip</a>
       <a href="https://github.com/santojon/Dogefy/tarball/master" class="btn">Download .tar.gz</a>
-      <a href="#dogefyExample" class="btn">Give it a try!</a>
+      <a onclick="scrollToId('div', 200, 'dogefyExample');" class="btn">Give it a try!</a>
     </section>
 
     <section class="main-content">
@@ -502,6 +502,15 @@ Like this:</p>
 					}
 				});
 			})();
+
+      /* Script to scroll content */
+      function scrollToID(container, elementOffset, id) {
+          var targetOffset = $(id).offset().top - elementOffset;
+          if (container != "html,body") {
+              targetOffset = targetOffset + $(container).scrollTop();
+          }
+          $(container).animate({scrollTop: targetOffset}, 500);
+      }
 		</script>
   </div>
 
