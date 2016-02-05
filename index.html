@@ -164,17 +164,21 @@ You set this with <strong>an array of strings</strong>.<br>
 </blockquote>
 
 <h4>
-<a id="4-colors" class="anchor" href="#4-colors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4. colors</h4>
+<a id="4-colors" class="anchor" href="#4-colors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4. colors, fonts and sizes</h4>
 
-<p>The colors of the doge phrases to show.<br>
+<p>The colors, fonts and sizes of the doge phrases to show.<br>
 One of then will be chosen randomly each time it barks.<br>
 Is setted with a list of possible values.<br>
-That can be <strong>the name of the color</strong> (HTML color name), or <strong>the HEX value itself</strong> (HTML style).<br>
-*<strong>Set this option will override default colors.</strong></p>
+For the color, that can be <strong>the name of the color</strong> (HTML color name), or <strong>the HEX value itself</strong> (HTML style).<br>
+For the sizes, that have to be <strong>the size in pixels</strong>.<br>
+For the fonts, that have to be <strong>the name of the font</strong> (HTML style).<br>
+*<strong>Set this option will override default values.</strong></p>
 
 <blockquote>
 <div class="highlight highlight-source-js"><pre> <span class="pl-k">var</span> doge <span class="pl-k">=</span> <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>#your_doge<span class="pl-pds">'</span></span>).<span class="pl-en">dogefy</span>({
-      colors<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">'</span>red<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>green<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>blue<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>#000<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>#ffcc66<span class="pl-pds">'</span></span>]
+      colors<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">'</span>red<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>green<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>blue<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>#000<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>#ffcc66<span class="pl-pds">'</span></span>],
+      fonts<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">'</span>Helvetica<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Arial<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Times New Roman<span class="pl-pds">'</span></span>],
+      sizes<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">'</span>12<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>20<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>40<span class="pl-pds">'</span></span>]
 });</pre></div>
 </blockquote>
 
@@ -475,7 +479,9 @@ Like this:</p>
 							}
 							callBack();
 						});
-					}
+					},
+          sizes: ['12', '20', '30', '42'],
+          fonts: ['Calibri', 'Impact', 'Arial', 'Times New Roman']
 				});
 			})();
 		</script>
