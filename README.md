@@ -112,16 +112,20 @@ You set this with **an array of strings**.
 > });
 > ```
 
-#### 4. colors
-The colors of the doge phrases to show.  
+#### 4. colors, fonts and sizes
+The colors, fonts and sizes of the doge phrases to show.  
 One of then will be chosen randomly each time it barks.  
 Is setted with a list of possible values.  
-That can be **the name of the color** (HTML color name), or **the HEX value itself** (HTML style).  
-\***Set this option will override default colors.**
+For the color, that can be **the name of the color** (HTML color name), or **the HEX value itself** (HTML style).  
+For the sizes, that have to be **the size in pixels**.  
+For the fonts, that can be **the name of the font** (HTML style).  
+\***Set these options will override default values.**
 
 > ```javascript
 >  var doge = $('#your_doge').dogefy({
-> 		colors: ['red', 'green', 'blue', '#000', '#ffcc66']
+> 		colors: ['red', 'green', 'blue', '#000', '#ffcc66'],
+> 		fonts: ['Arial', 'Helvetica', 'Times New Roman'],
+> 		sizes: ['16', '20', '24', '32']
 > });
 > ```
 
