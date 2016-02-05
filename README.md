@@ -290,14 +290,19 @@ Removes many barks from dogefied element. **Not all of then!**
 > doge.clearBarks();
 > ```
 
-#### 7. defaults()
-Reset the doge options to default values. Make it showns as a new doge.
+#### 7. defaults() and userDefaults()
+Reset the doge options to default (or user defaults) values. Make it showns as a new doge.
 
 > ```javascript
 > doge.defaults();
 > ```
 
-This method return the doge, resetted.
+This method return the doge, resetted.  
+You can set a single property to reset:
+
+> ```javascript
+> doge.userDefaults('colors');
+> ```
 
 
 ## Examples

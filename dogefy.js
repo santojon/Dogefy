@@ -263,12 +263,35 @@ function Dogefy(elem, options) {
 		/**
 		 * Reset doge to original values.
 		 * This can be used to reset an previously initialized doge.
+		 * @param prop: the property to set defaults.
 		 * @return: the doge, reseted.
 		 */
-		defaults: function() {
-			var props = propNames();
-			for (var i = 0; i < props.length; i++) {
-				options[props[i]] = defaultOptions[props[i]];
+		defaults: function(prop) {
+			if (prop) {
+				options[prop] = defaultOptions[prop];
+			} else {
+				var props = propNames();
+				for (var i = 0; i < props.length; i++) {
+					options[props[i]] = defaultOptions[props[i]];
+				}
+			}
+
+			return this;
+		},
+		/**
+		 * Reset doge to original user values.
+		 * This can be used to reset an previously initialized doge.
+		 * @param prop: the property to set defaults.
+		 * @return: the doge, reseted.
+		 */
+		userDefaults: function(prop) {
+			if (prop) {
+				options[prop] = userOptions[prop];
+			} else {
+				var props = propNames();
+				for (var i = 0; i < props.length; i++) {
+					options[props[i]] = userOptions[props[i]];
+				}
 			}
 
 			return this;
