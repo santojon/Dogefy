@@ -440,7 +440,7 @@ function Dogefy(elem, options) {
 			'fullWords', 'firstWords', 'lastWords', 'colors', 'barkInterval',
 			'barkOn', 'barkWhen', 'barkDelay', 'barkFrom', 'barkDuration',
 			'manyBarkOn', 'manyBarkWhen', 'manyBarkFrom', 'clearOn', 'clearWhen',
-			'clearFrom'
+			'clearFrom', 'fonts', 'sizes'
 		];
 	};
 
@@ -451,7 +451,7 @@ function Dogefy(elem, options) {
 	var listPropNames = function() {
 		return [
 			'fullWords', 'firstWords', 'lastWords', 'colors', 'barkOn', 'clearOn',
-			'manyBarkOn'
+			'manyBarkOn', 'fonts', 'sizes'
 		];
 	};
 
