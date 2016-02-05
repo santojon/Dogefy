@@ -368,15 +368,22 @@ Usage:</p>
 </blockquote>
 
 <h4>
-<a id="7-defaults" class="anchor" href="#7-defaults" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>7. defaults()</h4>
+<a id="7-defaults" class="anchor" href="#7-defaults" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>7. defaults() and userDefaults()</h4>
 
-<p>Reset the doge options to default values. Make it showns as a new doge.</p>
+<p>Reset the doge options to default (or user defaults) values. Make it showns as a new doge.</p>
 
 <blockquote>
 <div class="highlight highlight-source-js"><pre><span class="pl-smi">doge</span>.<span class="pl-en">defaults</span>();</pre></div>
 </blockquote>
 
-<p>This method return the doge, resetted.</p>
+<p>
+This method return the doge, resetted.<br>
+You can set a single property to reset:
+</p>
+
+<blockquote>
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">doge</span>.<span class="pl-en">userDefaults</span>(<span class="pl-s"><span class="pl-pds">'</span>colors<span class="pl-pds">'</span></span>);</pre></div>
+</blockquote>
 
 <h2>
 <a id="examples" class="anchor" href="#examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h2>
