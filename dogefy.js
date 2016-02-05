@@ -59,7 +59,8 @@ function Dogefy(elem, options) {
 		lastWords: [
 			'dangerous', 'code', 'bark', 'doge', 'dogefy', 'generate', 'clear',
 			'full', 'cute', 'word', 'sit', 'free', 'design', 'txt', 'phrase',
-			'master', 'layout', 'coin', 'clone', 'meme', 'colorfull', 'random'
+			'master', 'layout', 'coin', 'clone', 'meme', 'colorfull', 'random',
+			'fun', 'square'
 		],
 		colors: [
 			'red', 'yellow', 'green', 'blue', 'purple', 'orange', 'gray', 'aqua',
@@ -68,6 +69,7 @@ function Dogefy(elem, options) {
 			'dodgerblue', 'gold', 'fuchsia', 'yellowgreen', 'hotpink', 'lawnGreen',
 			'lime', 'tomato', 'turquoise', 'black', 'white', 'dimgray', 'orangered'
 		],
+		sizes: undefined,
 		barkInterval: 0,
 		barkOn: undefined,
 		manyBarkOn: undefined,
@@ -111,7 +113,8 @@ function Dogefy(elem, options) {
 					clearWhen: userOptions.clearWhen || defaultOptions.clearWhen,
 					clearFrom: userOptions.clearFrom || defaultOptions.clearFrom,
 					manyBarkOn: userOptions.manyBarkOn || defaultOptions.manyBarkOn,
-					clearOn: userOptions.clearOn || defaultOptions.clearOn
+					clearOn: userOptions.clearOn || defaultOptions.clearOn,
+					sizes: userOptions.sizes || defaultOptions.sizes
 				};
 			}
 
@@ -384,8 +387,6 @@ function Dogefy(elem, options) {
 	 * @return: the same node, formatted.
 	 */
 	var formatNode = function(node) {
-		// TODO make this better
-
 		// the position of the dogefied element
 		var topPos = getPosition(elem, 'top');
 		var bottomPos = getPosition(elem);
@@ -404,10 +405,13 @@ function Dogefy(elem, options) {
 		}
 
 		node.style.color = theColor;
+		node.className = 'phrase';
 		node.style.position = 'absolute';
+		node.style.fontSize = options.sizes ?
+				options.sizes[randomInt(0, options.sizes.length - 1)] + 'px' : 'medium';
+
 		node.style.left = randomInt(topPos.x, bottomPos.x - elem.clientWidth) + 'px';
 		node.style.top = randomInt(topPos.y, bottomPos.y - elem.clientHeight) + 'px';
-		node.className = 'phrase';
 
 		return node;
 	}
