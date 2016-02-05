@@ -70,6 +70,7 @@ function Dogefy(elem, options) {
 			'lime', 'tomato', 'turquoise', 'black', 'white', 'dimgray', 'orangered'
 		],
 		sizes: undefined,
+		fonts: ['Helvetica'],
 		barkInterval: 0,
 		barkOn: undefined,
 		manyBarkOn: undefined,
@@ -114,7 +115,8 @@ function Dogefy(elem, options) {
 					clearFrom: userOptions.clearFrom || defaultOptions.clearFrom,
 					manyBarkOn: userOptions.manyBarkOn || defaultOptions.manyBarkOn,
 					clearOn: userOptions.clearOn || defaultOptions.clearOn,
-					sizes: userOptions.sizes || defaultOptions.sizes
+					sizes: userOptions.sizes || defaultOptions.sizes,
+					fonts: userOptions.fonts || defaultOptions.fonts
 				};
 			}
 
@@ -409,6 +411,7 @@ function Dogefy(elem, options) {
 		node.style.position = 'absolute';
 		node.style.fontSize = options.sizes ?
 				options.sizes[randomInt(0, options.sizes.length - 1)] + 'px' : 'medium';
+		node.style.fontFamily = options.fonts[randomInt(0, options.fonts.length - 1)];
 
 		node.style.left = randomInt(topPos.x, bottomPos.x - elem.clientWidth) + 'px';
 		node.style.top = randomInt(topPos.y, bottomPos.y - elem.clientHeight) + 'px';
