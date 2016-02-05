@@ -390,8 +390,7 @@ function Dogefy(elem, options) {
 	 */
 	var formatNode = function(node) {
 		// the position of the dogefied element
-		var topPos = getPosition(elem, 'top');
-		var bottomPos = getPosition(elem);
+		var pos = elem.getBoundingClientRect();
 
 		// the color to set
 		var theColor = options.colors[randomInt(0, options.colors.length - 1)];
@@ -413,38 +412,14 @@ function Dogefy(elem, options) {
 				options.sizes[randomInt(0, options.sizes.length - 1)] + 'px' : 'medium';
 		node.style.fontFamily = options.fonts[randomInt(0, options.fonts.length - 1)];
 
-		node.style.left = randomInt(topPos.x, bottomPos.x - elem.clientWidth) + 'px';
-		node.style.top = randomInt(topPos.y, bottomPos.y - elem.clientHeight) + 'px';
+		// TODO make this better [WIP]
+		node.style.left = randomInt(pos.left, pos.right) + 'px';
+		node.style.top = randomInt(pos.top, pos.bottom) + 'px';
+		// node.style.right = pos.right + 'px';
+		// node.style.bottom = pos.bottom + 'px';
 
 		return node;
 	}
-
-	/**
-	 * Get position of an element.
-	 * @param element: the element to get position.
-	 * @return: an (x, y) value with values from element position.
-	 */
-	var getPosition = function(element, top) {
-		// TODO make this better
-	    var xPosition = 0;
-	    var yPosition = 0;
-	  
-	  	if (top) {
-	  		while(element) {
-		        xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
-		        yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
-		        element = element.offsetParent;
-		    }
-	  	} else {
-	  		while(element) {
-		        xPosition += (element.offsetWidth - element.scrollWidth + element.clientWidth);
-		        yPosition += (element.offsetHeight - element.scrollHeight + element.clientHeight);
-		        element = element.offsetParent;
-		    } 
-	  	}
-
-	    return { x: xPosition, y: yPosition };
-	};
 
 	/**
 	 * Auxiliar method to randomize doge barks and things.
