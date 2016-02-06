@@ -47,6 +47,9 @@ function Dogefy(elem, options) {
 	// the last used color in a bark
 	var lastColor;
 
+	// the position of the dogefied element
+	var pos = elem.getBoundingClientRect();
+
 	// the doge properties setted as default
 	var defaultOptions = {
 		fullWords: [
@@ -60,7 +63,7 @@ function Dogefy(elem, options) {
 			'dangerous', 'code', 'bark', 'doge', 'dogefy', 'generate', 'clear',
 			'full', 'cute', 'word', 'sit', 'free', 'design', 'txt', 'phrase',
 			'master', 'layout', 'coin', 'clone', 'meme', 'colorfull', 'random',
-			'fun', 'square'
+			'fun', 'pixel', 'prorotype', 'meta'
 		],
 		colors: [
 			'red', 'yellow', 'green', 'blue', 'purple', 'orange', 'gray', 'aqua',
@@ -69,7 +72,7 @@ function Dogefy(elem, options) {
 			'dodgerblue', 'gold', 'fuchsia', 'yellowgreen', 'hotpink', 'lawnGreen',
 			'lime', 'tomato', 'turquoise', 'black', 'white', 'dimgray', 'orangered'
 		],
-		sizes: undefined,
+		sizes: ['medium'],
 		fonts: ['Helvetica'],
 		barkInterval: 0,
 		barkOn: undefined,
@@ -346,6 +349,7 @@ function Dogefy(elem, options) {
 		// if many, don't use single bark delay
 		if (many) {
 			elem.appendChild(d);
+			fixBounds(d);
 			// gets the duration of the bark from options (the default is '10000')
 			if (options.barkDuration > 0) {
 				setTimeout(function() {
@@ -356,6 +360,7 @@ function Dogefy(elem, options) {
 			// gets the timeout from options (the default is '0')
 			setTimeout(function() {
 				elem.appendChild(d);
+				fixBounds(d);
 				// gets the duration of the bark from options (the default is '10000')
 				if (options.barkDuration > 0) {
 					setTimeout(function() {
@@ -412,9 +417,6 @@ function Dogefy(elem, options) {
 	 * @return: the same node, formatted.
 	 */
 	var formatNode = function(node) {
-		// the position of the dogefied element
-		var pos = elem.getBoundingClientRect();
-
 		// the color to set
 		var theColor = options.colors[randomInt(0, options.colors.length - 1)];
 
@@ -428,20 +430,43 @@ function Dogefy(elem, options) {
 			lastColor = theColor;
 		}
 
-		node.style.color = theColor;
 		node.className = 'phrase';
-		node.style.position = 'absolute';
-		node.style.fontSize = options.sizes ?
-				options.sizes[randomInt(0, options.sizes.length - 1)] + 'px' : 'medium';
-		node.style.fontFamily = options.fonts[randomInt(0, options.fonts.length - 1)];
+		var css = {
+			color: theColor,
+			position: 'absolute',
+			fontSize: options.sizes[randomInt(0, options.sizes.length - 1)] + 'px',
+			fontFamily:  options.fonts[randomInt(0, options.fonts.length - 1)],
+			top: randomInt(pos.top, pos.bottom) + 'px',
+			left: randomInt(pos.left, pos.right) + 'px'
+		};
 
-		// TODO make this better [WIP]
-		node.style.left = randomInt(pos.left, pos.right) + 'px';
-		node.style.top = randomInt(pos.top, pos.bottom) + 'px';
-		// node.style.right = pos.right + 'px';
-		// node.style.bottom = pos.bottom + 'px';
+		// apply css style
+		applyStyle(css, node);
 
 		return node;
+	}
+
+	/**
+	 * Fix position of a bark recently drawed in screen.
+	 * @param node: the doge phrase to fix positioning.
+	 */
+	var fixBounds = function(node) {
+		var css = {
+			top: randomInt(pos.top, pos.bottom - node.clientHeight) + 'px',
+			left: randomInt(pos.left, pos.right - node.clientWidth) + 'px'
+		};
+		applyStyle(css, node);
+	}
+
+	/**
+	 * Apply a css style to a given node.
+	 * @param css: the style to be applyed.
+	 * @param node: the element to apply style.
+	 */
+	var applyStyle = function(css, node) {
+		for(i in css){
+		   node.style[i] = css[i];
+		}
 	}
 
 	/**
