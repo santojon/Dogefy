@@ -73,7 +73,7 @@ function Dogefy(elem, options) {
 			'lime', 'tomato', 'turquoise', 'black', 'white', 'dimgray', 'orangered'
 		],
 		sizes: ['medium'],
-		fonts: ['Helvetica'],
+		fonts: ['Comic Sans MS'],
 		barkInterval: 0,
 		barkOn: undefined,
 		manyBarkOn: undefined,
