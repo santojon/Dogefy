@@ -86,6 +86,9 @@ function Dogefy(elem, options) {
 		barkDuration: 10000,
 		clearFrom: undefined,
 		clearWhen: noop,
+		shadow: false,
+		shadowColor: 'black',
+		zIndexes: ['999']
 	};
 	var options = defaultOptions;
 
@@ -119,7 +122,10 @@ function Dogefy(elem, options) {
 					manyBarkOn: userOptions.manyBarkOn || defaultOptions.manyBarkOn,
 					clearOn: userOptions.clearOn || defaultOptions.clearOn,
 					sizes: userOptions.sizes || defaultOptions.sizes,
-					fonts: userOptions.fonts || defaultOptions.fonts
+					fonts: userOptions.fonts || defaultOptions.fonts,
+					shadow: userOptions.shadow || defaultOptions.shadow,
+					shadowColor: userOptions.shadowColor || defaultOptions.shadowColor,
+					zIndexes: userOptions.zIndexes || defaultOptions.zIndexes
 				};
 			}
 
@@ -437,7 +443,9 @@ function Dogefy(elem, options) {
 			fontSize: options.sizes[randomInt(0, options.sizes.length - 1)] + 'px',
 			fontFamily:  options.fonts[randomInt(0, options.fonts.length - 1)],
 			top: randomInt(pos.top, pos.bottom) + 'px',
-			left: randomInt(pos.left, pos.right) + 'px'
+			left: randomInt(pos.left, pos.right) + 'px',
+			textShadow: options.shadow ? '5px 5px 5px ' + options.shadowColor : undefined,
+			zIndex: options.zIndexes[randomInt(0, options.zIndexes.length - 1)]
 		};
 
 		// apply css style
@@ -488,7 +496,7 @@ function Dogefy(elem, options) {
 			'fullWords', 'firstWords', 'lastWords', 'colors', 'barkInterval',
 			'barkOn', 'barkWhen', 'barkDelay', 'barkFrom', 'barkDuration',
 			'manyBarkOn', 'manyBarkWhen', 'manyBarkFrom', 'clearOn', 'clearWhen',
-			'clearFrom', 'fonts', 'sizes'
+			'clearFrom', 'fonts', 'sizes', 'shadow', 'shadowColor', 'zIndexes'
 		];
 	};
 
@@ -499,7 +507,7 @@ function Dogefy(elem, options) {
 	var listPropNames = function() {
 		return [
 			'fullWords', 'firstWords', 'lastWords', 'colors', 'barkOn', 'clearOn',
-			'manyBarkOn', 'fonts', 'sizes'
+			'manyBarkOn', 'fonts', 'sizes', 'zIndexes'
 		];
 	};
 
