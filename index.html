@@ -17,6 +17,7 @@
       <a href="https://github.com/santojon/Dogefy/zipball/master" class="btn">Download .zip</a>
       <a href="https://github.com/santojon/Dogefy/tarball/master" class="btn">Download .tar.gz</a>
       <button id="dogefyBtn" class="btn">Dogefy it!</button>
+      <button id="clearBtn" class="btn" style="display: none;">Clear some barks</button>
     </section>
 
     <section class="main-content">
@@ -476,13 +477,16 @@ Like this:</p>
 			   	var doge = document.getElementById('doge').dogefy({
 					barkInterval: 500,
 					barkDuration: -1,
+          clearFrom: document.getElementById('clearBtn'),
 					manyBarkWhen: function(callBack) {
 						var alot = document.getElementById('dogefyBtn');
 						alot.addEventListener('click', function() {
 							if (alot.innerHTML === 'Dogefy it!') {
 								alot.innerHTML = 'Stop!';
+                document.getElementById('clearBtn').style.display = 'inline-block';
 							} else {
 								alot.innerHTML = 'Dogefy it!';
+                document.getElementById('clearBtn').style.display = 'none';
 							}
 							callBack();
 						});
