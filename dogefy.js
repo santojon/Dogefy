@@ -511,8 +511,15 @@ function Dogefy(elem, options) {
 		var result = [];
 		var allTxt = getAllText();
 
-		for(i = 0; allTxt.length; i++) {
-			console.log(allTxt[i].filter(matches));
+		for(i = 0; i < allTxt.length; i++) {
+			var resultList = allTxt[i].split(' ')
+								.filter(function(val) {
+									return val.match(/\w+/);
+								});
+								
+			for(j = 0; j < resultList.length; j++) {
+				result.push(resultList[j]);
+			}
 		}
 
 		return result;
@@ -545,10 +552,6 @@ function Dogefy(elem, options) {
 			 * AUXILIARS FOR ALL FUNCTIONS
 			 * ----------------------------------------
 			 */
-
-	var matches = function(val) {
-		return val.match(/\w+/);
-	}
 
 	/**
 	 * Auxiliar method to randomize doge barks and things.
