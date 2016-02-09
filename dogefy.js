@@ -507,6 +507,10 @@ function Dogefy(elem, options) {
 			 * ----------------------------------------
 			 */
 
+	/**
+	 * Get the text from all elements in page body, processed as subtexts.
+	 * @return: a list with all texts.
+	 */
 	var getAllProcessedText = function() {
 		var result = [];
 		var allTxt = getAllText();
