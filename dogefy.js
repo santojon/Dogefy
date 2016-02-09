@@ -8,7 +8,7 @@
 //                                                                          //
 // http://www.apache.org/licenses/LICENSE-2.0                               //
 //                                                                          //
-// or in file 'LICENSE.txt' on roort of this project.                       //
+// or in file 'LICENSE' on root of this project.                            //
 //                                                                          //
 // Unless required by applicable law or agreed to in writing, software      //
 // distributed under the License is distributed on an "AS IS" BASIS,        //
@@ -54,7 +54,7 @@ function Dogefy(elem, options) {
 	var defaultOptions = {
 		fullWords: [
 			'wow', 'amaze', 'cool', 'exite', '/10', 'oh my doge', 'helvetica',
-			'awesome', 'great', 'swag'
+			'awesome', 'great', 'swag', 'concern'
 		],
 		firstWords: [
 			'such', 'so', 'very', 'many', 'want', 'need', 'plz', 'go', 'yes'
@@ -63,7 +63,7 @@ function Dogefy(elem, options) {
 			'dangerous', 'code', 'bark', 'doge', 'dogefy', 'generate', 'clear',
 			'full', 'cute', 'word', 'sit', 'free', 'design', 'txt', 'phrase',
 			'master', 'layout', 'coin', 'clone', 'meme', 'colorfull', 'random',
-			'fun', 'pixel', 'prorotype', 'meta'
+			'fun', 'pixel', 'prorotype', 'meta', 'neutral', 'scare'
 		],
 		colors: [
 			'red', 'yellow', 'green', 'blue', 'purple', 'orange', 'gray', 'aqua',
@@ -88,7 +88,8 @@ function Dogefy(elem, options) {
 		clearWhen: noop,
 		shadow: false,
 		shadowColor: 'black',
-		zIndexes: ['999']
+		zIndexes: ['999'],
+		adaptive: false
 	};
 	var options = defaultOptions;
 
@@ -125,8 +126,17 @@ function Dogefy(elem, options) {
 					fonts: userOptions.fonts || defaultOptions.fonts,
 					shadow: userOptions.shadow || defaultOptions.shadow,
 					shadowColor: userOptions.shadowColor || defaultOptions.shadowColor,
-					zIndexes: userOptions.zIndexes || defaultOptions.zIndexes
+					zIndexes: userOptions.zIndexes || defaultOptions.zIndexes,
+					adaptive: userOptions.adaptive || defaultOptions.adaptive
 				};
+			}
+
+			if (options.adaptive) {
+				if (options.adaptive instanceof Array) {
+					// TODO restrictions
+				} else {
+					this.put('fullWords', getAllProcessedText());
+				}
 			}
 
 			// set bark triggers
@@ -268,6 +278,14 @@ function Dogefy(elem, options) {
 		 */
 		clearBarks: function() {
 			clearBarks();
+		},
+		/**
+		 * Adapt doge language to this page.
+		 */
+		adapt: function() {
+			this.put('fullWords', getAllProcessedText());
+
+			return this;
 		},
 		/**
 		 * Reset doge to original values.
@@ -416,6 +434,11 @@ function Dogefy(elem, options) {
 	 */
 
 
+			 /**
+			  * ----------------------------------------
+			  * STYLE RELATED
+			  * ----------------------------------------
+			  */
 
 	 /**
 	 * Formats the doge phrase to show.
@@ -476,6 +499,48 @@ function Dogefy(elem, options) {
 		   node.style[i] = css[i];
 		}
 	}
+
+
+			/**
+			 * ----------------------------------------
+			 * TEXT ADAPTION RELATED
+			 * ----------------------------------------
+			 */
+
+	var getAllProcessedText = function() {
+		return getAllText();
+	}
+
+	/**
+	 * Get the text from all elements in page body.
+	 * @return: a list with all texts.
+	 */
+	var getAllText = function() {
+		var allText = [document.title];
+	    var elements = document.body.getElementsByTagName('*');
+	    //document.querySelectorAll('p,li')
+
+	    for(var i = 0; i < elements.length; i++) {
+	       var current = elements[i];
+	       // Check the element has no children && that it is not empty
+	       if(current.children.length === 0 && current.textContent.replace(/ |\n\r/g,'') !== '') {
+	          var txt = current.textContent;
+
+	          if (txt.length > 3 && txt.length < 300) {
+	          	allText.push(txt);
+	          }
+	       }
+	    }
+
+	    return allText;
+	}
+
+
+			/**
+			 * ----------------------------------------
+			 * AUXILIARS FOR ALL FUNCTIONS
+			 * ----------------------------------------
+			 */
 
 	/**
 	 * Auxiliar method to randomize doge barks and things.
