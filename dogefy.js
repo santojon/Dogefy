@@ -508,7 +508,14 @@ function Dogefy(elem, options) {
 			 */
 
 	var getAllProcessedText = function() {
-		return getAllText();
+		var result = [];
+		var allTxt = getAllText();
+
+		for(i = 0; allTxt.length; i++) {
+			console.log(allTxt[i].filter(matches));
+		}
+
+		return result;
 	}
 
 	/**
@@ -525,10 +532,7 @@ function Dogefy(elem, options) {
 	       // Check the element has no children && that it is not empty
 	       if(current.children.length === 0 && current.textContent.replace(/ |\n\r/g,'') !== '') {
 	          var txt = current.textContent;
-
-	          if (txt.length > 3 && txt.length < 300) {
-	          	allText.push(txt);
-	          }
+	          allText.push(txt);
 	       }
 	    }
 
@@ -541,6 +545,10 @@ function Dogefy(elem, options) {
 			 * AUXILIARS FOR ALL FUNCTIONS
 			 * ----------------------------------------
 			 */
+
+	var matches = function(val) {
+		return val.match(/\w+/);
+	}
 
 	/**
 	 * Auxiliar method to randomize doge barks and things.
