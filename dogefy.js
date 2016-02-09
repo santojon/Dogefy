@@ -516,7 +516,7 @@ function Dogefy(elem, options) {
 								.filter(function(val) {
 									return val.match(/\w+/);
 								});
-								
+
 			for(j = 0; j < resultList.length; j++) {
 				result.push(resultList[j]);
 			}
@@ -531,8 +531,10 @@ function Dogefy(elem, options) {
 	 */
 	var getAllText = function() {
 		var allText = [document.title];
+
+		// get all except script
 	    var elements = document.body.getElementsByTagName('*');
-	    //document.querySelectorAll('p,li')
+	    elements -= document.body.getElementsByTagName('script');
 
 	    for(var i = 0; i < elements.length; i++) {
 	       var current = elements[i];
