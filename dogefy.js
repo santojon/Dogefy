@@ -63,7 +63,7 @@ function Dogefy(elem, options) {
 			'dangerous', 'code', 'bark', 'doge', 'dogefy', 'generate', 'clear',
 			'full', 'cute', 'word', 'sit', 'free', 'design', 'master', 'layout',
 			'coin', 'clone', 'meme', 'colorfull', 'random', 'fun', 'pixel',
-			'prorotype', 'meta'
+			'prorotype', 'meta', 'beta'
 		],
 		colors: [
 			'red', 'yellow', 'green', 'blue', 'purple', 'orange', 'gray', 'aqua',
