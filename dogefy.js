@@ -538,6 +538,7 @@ function Dogefy(elem, options) {
 		// text to process
 		var allTxt = getAllText();
 
+		// prepare texts to classify
 		for(i = 0; i < allTxt.length; i++) {
 			var resultList = allTxt[i].split(/[\,\.\!\\\/\;\?]+/)
 								.filter(function(val) {
@@ -556,8 +557,11 @@ function Dogefy(elem, options) {
 				result.push(resultList2[j].trim().toLowerCase());
 			}
 		}
+
+		// make this unique
 		result = uniqueValues(result);
 
+		// put texts in right places
 		for(i = 0; i < result.length; i++) {
 			if (result[i].length < 3) {
 				processedResult.first.push(result[i]);
@@ -575,6 +579,7 @@ function Dogefy(elem, options) {
 			}
 		}
 
+		// the result
 		return processedResult;
 	}
 
