@@ -1,4 +1,4 @@
-| <h1>Dogefy</h1> **v0.1 (beta)** |
+| <h1>Dogefy</h1> **v0.2 (beta)** |
 :-----------------:
 | A JS lib to make your DOM bark! |
 | <img src="screenshot.jpg" title="Dogefy screenshot"/> |
@@ -221,6 +221,19 @@ You can pass the function you want. The only concern is that function have to re
 The callback will be the selected doge event (clear, bark or manyBark).  
 With this you can set straight conditions for each doge event.
 
+#### 11. adaptive
+This can be set to **true** or **false**. The default is **false**.  
+You can set this like:
+
+> ```javascript
+>  var doge = $('#your_doge').dogefy({
+> 		adaptive: true
+>  }
+> });
+> ```
+
+This make your doge adapt its language to the page, using the page words and expressions.
+
 
 ## Methods
 
@@ -304,6 +317,23 @@ You can set a single property to reset:
 > doge.userDefaults('colors');
 > ```
 
+#### 8. uniqueWords()
+A manner to make your doge vocabulary non repeated.  
+All 'word' properties will be filtered to don't have repeated words.
+
+> ```javascript
+> doge.uniqueWords();
+> ```
+
+#### 9. adapt()
+Adapt the doge vocabulary.  
+All 'word' properties can be updated with words and expressions of the page.  
+The names of the fonts you use will be added to doge vocabulary too.
+
+> ```javascript
+> doge.adapt();
+> ```
+
 
 ## Examples
 Dogefy was built to be personalized.  
@@ -360,7 +390,9 @@ Like this:
 > 		firstWords: ['very', 'not', 'go'],
 > 		lastWords: ['common', 'dogefy', 'bark'],
 > 		colors: ['red', 'yellow', 'blue', 'green', 'black', '#ffcc00'],
-> 		clearOn: ['load', 'mouseout']
+> 		clearOn: ['load', 'mouseout'],
+> 		shadow: true,
+> 		adaptive: true
 >  });
 >```
 
