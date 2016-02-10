@@ -136,6 +136,10 @@ function Dogefy(elem, options) {
 				this.put('fullWords', options.fonts);
 				this.put('firstWords', getAllProcessedText().first);
 				this.put('lastWords', getAllProcessedText().last);
+
+				document.body.addEventListener('DOMSubtreeModified', function() {
+					this.adapt();
+				});
 			}
 
 			// set bark triggers
@@ -293,6 +297,7 @@ function Dogefy(elem, options) {
 		 * Adapt doge language to this page.
 		 */
 		adapt: function() {
+			console.log('adapting...');
 			this.put('fullWords', getAllProcessedText().full);
 			this.put('fullWords', options.fonts);
 			this.put('firstWords', getAllProcessedText().first);
@@ -540,21 +545,27 @@ function Dogefy(elem, options) {
 
 		// prepare texts to classify
 		for(i = 0; i < allTxt.length; i++) {
-			var resultList = allTxt[i].split(/[\,\.\!\\\/\;\?]+/)
+			var resultList = allTxt[i]
+				.split(/[\,\.\!\\\/\;\?\'\"\@\#\$\%\&\*\(\)\-\_\=\+\^\~\]\[\{\}\:\>\<']+/)
 								.filter(function(val) {
 									return val.match(/([A-Za-z])\w+/g);
 								});
-			var resultList2 = allTxt[i].split(/[\s\,\.\!\\\/\;\?]+/)
+			var resultList2 = allTxt[i]
+				.split(/[\s\,\.\!\\\/\;\?\'\"\@\#\$\%\&\*\(\)\-\_\=\+\^\~\]\[\{\}\:\>\<]+/)
 									.filter(function(val) {
 										return val.match(/([A-Za-z])\w+/g);
 									});
 
 			for(j = 0; j < resultList.length; j++) {
-				result.push(resultList[j].trim().toLowerCase());
+				if (resultList[j].trim().length < 21) {
+					result.push(resultList[j].trim().toLowerCase());
+				}
 			}
 
 			for(j = 0; j < resultList2.length; j++) {
-				result.push(resultList2[j].trim().toLowerCase());
+				if (resultList2[j].trim().length < 21) {
+					result.push(resultList2[j].trim().toLowerCase());
+				}
 			}
 		}
 
@@ -568,8 +579,7 @@ function Dogefy(elem, options) {
 			} else if (result[i].split(/\s/).length > 1) {
 				processedResult.full.push(result[i]);
 			} else {
-				if (result[i].length < 4 &&
-						!inList(result[i], ['wow', 'txt', 'sit'])) {
+				if (result[i].length < 4 && !inList(result[i], ['wow', 'txt', 'sit'])) {
 					processedResult.first.push(result[i]);
 				} else if (inList(result[i], ['wow'])) {
 					processedResult.full.push(result[i]);
@@ -599,10 +609,12 @@ function Dogefy(elem, options) {
 	       if(current.children.length === 0 &&
 	       			current.textContent.replace(/ |\n\r/g,'') !== '') {
 
-	       		// get it only if is not a script
+	       		// get it only if is not a script or code block
 	       		if (current.outerHTML.indexOf('<script') < 0) {
-	       			var txt = current.textContent;
-	          		allText.push(txt);
+	       			if (current.outerHTML.indexOf('<code') < 0) {
+		       			var txt = current.textContent;
+		          		allText.push(txt);
+		          	}
 	       		}
 	       }
 	    }
