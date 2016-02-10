@@ -53,17 +53,17 @@ function Dogefy(elem, options) {
 	// the doge properties setted as default
 	var defaultOptions = {
 		fullWords: [
-			'wow', 'amaze', 'cool', 'exite', '/10', 'oh my doge', 'helvetica',
-			'awesome', 'great', 'swag', 'concern'
+			'wow', 'amaze', 'cool', 'exite', '/10', 'oh my doge', 'awesome',
+			'great', 'swag'
 		],
 		firstWords: [
-			'such', 'so', 'very', 'many', 'want', 'need', 'plz', 'go', 'yes'
+			'such', 'so', 'very', 'many', 'want', 'need', 'plz', 'go'
 		],
 		lastWords: [
 			'dangerous', 'code', 'bark', 'doge', 'dogefy', 'generate', 'clear',
-			'full', 'cute', 'word', 'sit', 'free', 'design', 'txt', 'phrase',
-			'master', 'layout', 'coin', 'clone', 'meme', 'colorfull', 'random',
-			'fun', 'pixel', 'prorotype', 'meta', 'neutral', 'scare'
+			'full', 'cute', 'word', 'sit', 'free', 'design', 'master', 'layout',
+			'coin', 'clone', 'meme', 'colorfull', 'random', 'fun', 'pixel',
+			'prorotype', 'meta'
 		],
 		colors: [
 			'red', 'yellow', 'green', 'blue', 'purple', 'orange', 'gray', 'aqua',
@@ -132,11 +132,10 @@ function Dogefy(elem, options) {
 			}
 
 			if (options.adaptive) {
-				if (options.adaptive instanceof Array) {
-					// TODO restrictions
-				} else {
-					this.put('fullWords', getAllProcessedText());
-				}
+				this.put('fullWords', getAllProcessedText().full);
+				this.put('fullWords', options.fonts);
+				this.put('firstWords', getAllProcessedText().first);
+				this.put('lastWords', getAllProcessedText().last);
 			}
 
 			// set bark triggers
@@ -274,6 +273,17 @@ function Dogefy(elem, options) {
 			return this;
 		},
 		/**
+		 * Make all words list unique valued.
+		 * @return: the doge, modified.
+		 */
+		uniqueWords: function() {
+			options.fullWords = uniqueValues(options.fullWords);
+			options.firstWords = uniqueValues(options.firstWords);
+			options.lastWords = uniqueValues(options.lastWords);
+
+			return this;
+		},
+		/**
 		 * Clear many barks to make all more clear.
 		 */
 		clearBarks: function() {
@@ -283,9 +293,12 @@ function Dogefy(elem, options) {
 		 * Adapt doge language to this page.
 		 */
 		adapt: function() {
-			this.put('fullWords', getAllProcessedText());
+			this.put('fullWords', getAllProcessedText().full);
+			this.put('fullWords', options.fonts);
+			this.put('firstWords', getAllProcessedText().first);
+			this.put('lastWords', getAllProcessedText().last);
 
-			return this;
+			return this.uniqueWords();
 		},
 		/**
 		 * Reset doge to original values.
@@ -512,21 +525,57 @@ function Dogefy(elem, options) {
 	 * @return: a list with all texts.
 	 */
 	var getAllProcessedText = function() {
+		// all results
 		var result = [];
+
+		// the place for processed results
+		var processedResult = {
+			full: [],
+			first: [],
+			last: []
+		};
+
+		// text to process
 		var allTxt = getAllText();
 
 		for(i = 0; i < allTxt.length; i++) {
-			var resultList = allTxt[i].split(' ')
+			var resultList = allTxt[i].split(/[\,\.\!\\\/\;\?]+/)
 								.filter(function(val) {
-									return val.match(/\w+/);
+									return val.match(/([A-Za-z])\w+/g);
 								});
+			var resultList2 = allTxt[i].split(/[\s\,\.\!\\\/\;\?]+/)
+									.filter(function(val) {
+										return val.match(/([A-Za-z])\w+/g);
+									});
 
 			for(j = 0; j < resultList.length; j++) {
-				result.push(resultList[j]);
+				result.push(resultList[j].trim().toLowerCase());
+			}
+
+			for(j = 0; j < resultList2.length; j++) {
+				result.push(resultList2[j].trim().toLowerCase());
+			}
+		}
+		result = uniqueValues(result);
+
+		for(i = 0; i < result.length; i++) {
+			if (result[i].length < 3) {
+				processedResult.first.push(result[i]);
+			} else if (result[i].split(/\s/).length > 1) {
+				processedResult.full.push(result[i]);
+			} else {
+				if (result[i].length < 4 &&
+						!inList(result[i], ['wow', 'txt', 'sit'])) {
+					processedResult.first.push(result[i]);
+				} else if (inList(result[i], ['wow'])) {
+					processedResult.full.push(result[i]);
+				} else {
+					processedResult.last.push(result[i]);
+				}
 			}
 		}
 
-		return result;
+		return processedResult;
 	}
 
 	/**
@@ -538,14 +587,18 @@ function Dogefy(elem, options) {
 
 		// get all except script
 	    var elements = document.body.getElementsByTagName('*');
-	    elements -= document.body.getElementsByTagName('script');
-
+	    
 	    for(var i = 0; i < elements.length; i++) {
 	       var current = elements[i];
 	       // Check the element has no children && that it is not empty
-	       if(current.children.length === 0 && current.textContent.replace(/ |\n\r/g,'') !== '') {
-	          var txt = current.textContent;
-	          allText.push(txt);
+	       if(current.children.length === 0 &&
+	       			current.textContent.replace(/ |\n\r/g,'') !== '') {
+
+	       		// get it only if is not a script
+	       		if (current.outerHTML.indexOf('<script') < 0) {
+	       			var txt = current.textContent;
+	          		allText.push(txt);
+	       		}
 	       }
 	    }
 
@@ -570,6 +623,17 @@ function Dogefy(elem, options) {
 	};
 
 	/**
+	 * Method to get a list of unique values.
+	 * @param lst: the list to get unique values.
+	 * @return: a list with unique values.
+	 */
+	var uniqueValues = function (lst) {
+	    return lst.sort().filter(function(item, pos, array) {
+	        return !pos || item != array[pos - 1];
+	    })
+	};
+
+	/**
 	 * The names of all doge properties.
 	 * @return: all the properties names.
 	 */
@@ -578,7 +642,8 @@ function Dogefy(elem, options) {
 			'fullWords', 'firstWords', 'lastWords', 'colors', 'barkInterval',
 			'barkOn', 'barkWhen', 'barkDelay', 'barkFrom', 'barkDuration',
 			'manyBarkOn', 'manyBarkWhen', 'manyBarkFrom', 'clearOn', 'clearWhen',
-			'clearFrom', 'fonts', 'sizes', 'shadow', 'shadowColor', 'zIndexes'
+			'clearFrom', 'fonts', 'sizes', 'shadow', 'shadowColor', 'zIndexes',
+			'adaptive'
 		];
 	};
 
@@ -599,7 +664,7 @@ function Dogefy(elem, options) {
 	 * @param lst: the list to search.
 	 * @return: true if exists, false otherwise.
 	 */
-	var inLinst = function(val, lst) {
+	var inList = function(val, lst) {
 		return lst.indexOf(val) > -1;
 	};
 
@@ -609,7 +674,7 @@ function Dogefy(elem, options) {
 	 * @return: true if exists, false otherwise.
 	 */
 	var existsProp = function(prop) {
-		return inLinst(prop, propNames());
+		return inList(prop, propNames());
 	};
 
 	/**
@@ -618,7 +683,7 @@ function Dogefy(elem, options) {
 	 * @return: true if exists, false otherwise.
 	 */
 	var existsListProp = function (prop) {
-		return inLinst(prop, listPropNames());
+		return inList(prop, listPropNames());
 	};
 
 	// return the Doge object
