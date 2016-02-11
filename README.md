@@ -1,4 +1,4 @@
-| <h1>Dogefy</h1> **v0.2 (beta)** |
+| <h1>Dogefy</h1> **v0.3 (beta)** |
 :-----------------:
 | A JS lib to make your DOM bark! |
 | <img src="screenshot.jpg" title="Dogefy screenshot"/> |
@@ -42,13 +42,7 @@ or jQuery way:
 
 Now you have a doge in your 'doge' var.  
 This was created with the selected node.  
-To make it work properly, you have to initialize it with **init()** function:
-
-> ```javascript
-> doge.init();
-> ```
-
-An initialized doge can bark!
+A doge can bark!
 
 > ```javascript
 > doge.bark();
@@ -166,7 +160,7 @@ To prevent the barks to hides itself, set this to **-1**, like:
 > });
 > ```
 
-#### 8. barkOn, manyBarkOn, adaptOn and clearOn
+#### 8. barkOn, manyBarkOn, adaptOn, clearOn, clearAllOn
 The postfix **'on'** in these options mean a link with javascript events.  
 You can set this like:
 
@@ -187,7 +181,7 @@ or with a list of events:
 These means the chosen event(s) will be bounded with the dogefied element.  
 The main difference between then is **the action after the event fires** (clear, bark or manyBark).
 
-#### 9. barkFrom, manyBarkFrom, adaptFrom and clearFrom
+#### 9. barkFrom, manyBarkFrom, adaptFrom, clearFrom, clearAllFrom
 The postfix **'from'** in these options mean a link to another element.  
 You can set this like:
 
@@ -201,7 +195,7 @@ These means the chosen element will be bounded with the selected doge event (cle
 When you click in the element you pass in option, your doge will react with the action you choose.  
 You can pass **only one** element on these options.
 
-#### 10. barkWhen, manyBarkWhen, adaptWhen and clearWhen
+#### 10. barkWhen, manyBarkWhen, adaptWhen, clearWhen, clearAllWhen
 The postfix **'when'** in these options mean you can pass a function as value.  
 You can set this like:
 
@@ -238,16 +232,10 @@ This make your doge adapt its language to the page, using the page words and exp
 ## Methods
 
 #### 1. init()
-The first method to be called when creating a doge (\*unless you use the **alternate way**).  
+The first method to be called when creating a doge.  
 This sets up a doge, to be totally usefull.  
 Returns a your doge, fully usefull.  
-**Do not use this on an initialized doge!**  
-Usage:
-
-> ```javascript
-> doge.init();
-> ```
-
+\***You don't need to use it. Dogefy returns initislised doges.**  
 This method return the doge, initialized.  
 All other methods works **on initialized doges**.
 
@@ -296,8 +284,8 @@ or:
 
 This method return the doge, updated.
 
-#### 6. clearBarks()
-Removes many barks from dogefied element. **Not all of then!**
+#### 6. clearBarks() and clearAllBarks()
+Removes many barks from dogefied element. **clearBarks() do not remove all of then!**
 
 > ```javascript
 > doge.clearBarks();
@@ -332,6 +320,16 @@ The names of the fonts you use will be added to doge vocabulary too.
 
 > ```javascript
 > doge.adapt();
+> ```
+
+#### 10. utils [cloneTo(el), saveOptions(), getOptions(), whoAmI()]
+Methods used to get/save/copy important doge properties.  
+saveOptions() and getOptions() are used to make current options the user defaults or get the current ones.  
+whoAmI() returns the DOM element the doge is in.  
+cloneTo(el) creates a copy of doge with same options into element 'el'.
+
+> ```javascript
+> var doge2 = doge.saveOptions().cloneTo($('#new_doge'));
 > ```
 
 

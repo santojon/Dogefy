@@ -92,7 +92,10 @@ function Dogefy(elem, options) {
 		adaptive: false,
 		adaptOn: undefined,
 		adaptFrom: undefined,
-		adaptWhen: noop
+		adaptWhen: noop,
+		clearAllFrom: undefined,
+		clearAllOn: undefined,
+		clearAllWhen: noop
 	};
 	var options = defaultOptions;
 
@@ -103,7 +106,7 @@ function Dogefy(elem, options) {
 	doge.prototype = {
 		/**
 		 * Function responsible to setup doge.
-		 * @return: the doge, initialized.
+		 * @return: the doge, initialised.
 		 */
 		init: function() {
 			// set options
@@ -133,10 +136,14 @@ function Dogefy(elem, options) {
 					adaptive: userOptions.adaptive || defaultOptions.adaptive,
 					adaptWhen: userOptions.adaptWhen || defaultOptions.adaptWhen,
 					adaptOn: userOptions.adaptOn || defaultOptions.adaptOn,
-					adaptFrom: userOptions.adaptFrom || defaultOptions.adaptFrom
+					adaptFrom: userOptions.adaptFrom || defaultOptions.adaptFrom,
+					clearAllFrom: userOptions.clearAllFrom || defaultOptions.clearAllFrom,
+					clearAllWhen: userOptions.clearAllWhen || defaultOptions.clearAllWhen,
+					clearAllOn: userOptions.clearAllOn || defaultOptions.clearAllOn
 				};
 			}
 
+			// adaptive things
 			if (options.adaptive) {
 				this.put('fullWords', getAllProcessedText().full);
 				this.put('fullWords', options.fonts);
@@ -188,6 +195,17 @@ function Dogefy(elem, options) {
 				options.clearFrom.addEventListener('click', function() {
 					clearBarks();
 				});
+			}
+
+			// set clear all thiggers
+			if (options.clearAllFrom) {
+				options.clearAllFrom.addEventListener('click', function() {
+					clearAllBarks();
+				});
+			}
+
+			if (options.clearAllWhen) {
+				options.clearAllWhen(clearAllBarks);
 			}
 
 			// if have interval, set many barks triggers
@@ -246,12 +264,26 @@ function Dogefy(elem, options) {
 				}
 			}
 
+			if (options.clearAllOn) {
+				if (options.clearAllOn instanceof Array) {
+					for (var i = 0; i < options.clearAllOn.length; i++) {
+						elem.addEventListener(options.clearAllOn[i], function() {
+							clearAllBarks();
+						});
+					}
+				} else {
+					elem.addEventListener(options.clearAllOn, function() {
+						clearAllBarks();
+					});
+				}
+			}
+
 			return this;
 		},
 		/**
 		 * Main function of doge. Make it barks.
 		 * Call it on $your_doge.bark();.
-		 * It ill respond with a doge phrase.
+		 * It will respond with a doge phrase.
 		 */
 		bark: function() {
 			bark();
@@ -259,7 +291,7 @@ function Dogefy(elem, options) {
 		/**
 		 * Main function of doge for repeated barks. Make it barks a lot.
 		 * Call it on $your_doge.manyBark();
-		 * It ill respond with a bunch of doge phrases.
+		 * It will respond with a bunch of doge phrases.
 		 */
 		manyBark: function() {
 			manyBark();
@@ -320,6 +352,24 @@ function Dogefy(elem, options) {
 			clearBarks();
 		},
 		/**
+		 * Used to clear all barks in screen.
+		 */
+		clearAllBarks: function() {
+			var p = document.getElementsByClassName('phrase');
+			for(i = 0; i < p.length; i++) {
+				clearBarks();
+				if (i === (p.length - 1)) {
+					p = document.getElementsByClassName('phrase');
+					i = 0;
+				}
+			}
+
+			// if is not all clear yet
+			if (p && p.length > 0) {
+				this.clearAllBarks();
+			}
+		},
+		/**
 		 * Adapt doge language to this page.
 		 */
 		adapt: function() {
@@ -332,7 +382,7 @@ function Dogefy(elem, options) {
 		},
 		/**
 		 * Reset doge to original values.
-		 * This can be used to reset an previously initialized doge.
+		 * This can be used to reset an previously initialised doge.
 		 * @param prop: the property to set defaults.
 		 * @return: the doge, reseted.
 		 */
@@ -350,7 +400,7 @@ function Dogefy(elem, options) {
 		},
 		/**
 		 * Reset doge to original user values.
-		 * This can be used to reset an previously initialized doge.
+		 * This can be used to reset an previously initialised doge.
 		 * @param prop: the property to set defaults.
 		 * @return: the doge, reseted.
 		 */
@@ -365,6 +415,36 @@ function Dogefy(elem, options) {
 			}
 
 			return this;
+		},
+		/**
+		 * Method used to clone doge from its default place to another.
+		 * @param el: the element to place new cloned doge.
+		 * @return: a new initialised doge, with same options, but placed in another element.
+		 */
+		cloneTo: function(el) {
+			return new Dogefy(el, options);
+		},
+		/**
+		 * Saves the current options to userOptions.
+		 * @return: the doge, modified.
+		 */
+		saveOptions: function() {
+			userOptions = options;
+			return this;
+		},
+		/**
+		 * To get the current options.
+		 * @return: the current options object.
+		 */
+		getOptions: function() {
+			return options;
+		},
+		/**
+		 * To get the dogefied element itself, not a doge.
+		 * @return: the dogefied element.
+		 */
+		whoAmI: function() {
+			return elem;
 		}
 	};
 
@@ -457,13 +537,20 @@ function Dogefy(elem, options) {
 	};
 
 	/**
-	 * Clear all the barks possible to get.
+	 * Clear some barks from screen.
 	 */
 	var clearBarks = function() {
 		var p = document.getElementsByClassName('phrase');
 		for (var i = 0; i < p.length; i++) {
 			p[i].parentNode.removeChild(p[i]);
 		}
+	};
+
+	/**
+	 * Clear all barks in screen.
+	 */
+	var clearAllBarks = function() {
+		doge.prototype.clearAllBarks();
 	};
 
 	/**
@@ -577,7 +664,7 @@ function Dogefy(elem, options) {
 		// prepare texts to classify
 		for(i = 0; i < allTxt.length; i++) {
 			var resultList = allTxt[i]
-				.split(/[\,\.\!\\\/\;\?\'\"\@\#\$\%\&\*\(\)\-\_\=\+\^\~\]\[\{\}\:\>\<']+/)
+				.split(/[\,\.\!\\\/\;\?\'\"\@\#\$\%\&\*\(\)\-\_\=\+\^\~\]\[\{\}\:\>\<]+/)
 								.filter(function(val) {
 									return val.match(/([A-Za-z])\w+/g);
 								});
@@ -656,7 +743,7 @@ function Dogefy(elem, options) {
 
 			/**
 			 * ----------------------------------------
-			 * AUXILIARS FOR ALL FUNCTIONS
+			 * AUXILIARY METHODS FOR ALL FUNCTIONS
 			 * ----------------------------------------
 			 */
 
@@ -691,7 +778,8 @@ function Dogefy(elem, options) {
 			'barkOn', 'barkWhen', 'barkDelay', 'barkFrom', 'barkDuration',
 			'manyBarkOn', 'manyBarkWhen', 'manyBarkFrom', 'clearOn', 'clearWhen',
 			'clearFrom', 'fonts', 'sizes', 'shadow', 'shadowColor', 'zIndexes',
-			'adaptive'
+			'adaptive', 'adaptFrom', 'adaptWhen', 'adaptOn', 'clearAllFrom',
+			'clearAllOn', 'clearAllWhen'
 		];
 	};
 
@@ -702,7 +790,7 @@ function Dogefy(elem, options) {
 	var listPropNames = function() {
 		return [
 			'fullWords', 'firstWords', 'lastWords', 'colors', 'barkOn', 'clearOn',
-			'manyBarkOn', 'fonts', 'sizes', 'zIndexes'
+			'manyBarkOn', 'fonts', 'sizes', 'zIndexes', 'adaptOn', 'clearAllOn'
 		];
 	};
 
@@ -734,18 +822,18 @@ function Dogefy(elem, options) {
 		return inList(prop, listPropNames());
 	};
 
-	// return the Doge object
-	return doge.prototype;
+	// return the Doge object, initialised
+	return doge.prototype.init();
 }
 
 /**
  * Needed to make any element a doge with $elem.dogefy();.
  * Make sure the $elem is really a DOM Node.
  * With this, we can dogefy any element in the screen as default.
- * @return: dogefy() will return an initialized doge.
+ * @return: dogefy() will return an initialised doge.
  */
 (function() {
 	Node.prototype.dogefy = function(options) {
-		return new Dogefy(this, options).init();
+		return new Dogefy(this, options);
 	}
 })();
