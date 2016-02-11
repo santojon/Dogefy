@@ -365,6 +365,36 @@ function Dogefy(elem, options) {
 			}
 
 			return this;
+		},
+		/**
+		 * Method used to clone doge from its default place to another.
+		 * @param el: the element to place new cloned doge.
+		 * @return: a new initialized doge, with same options, but placed in another element.
+		 */
+		cloneTo: function(el) {
+			return new Dogefy(el, options).init();
+		},
+		/**
+		 * Saves the actual options to userOptions.
+		 * @return: the doge, modified.
+		 */
+		saveOptions: function() {
+			userOptions = options;
+			return this;
+		},
+		/**
+		 * To get the current options.
+		 * @return: the actual options object.
+		 */
+		getOptions: function() {
+			return options;
+		},
+		/**
+		 * To get the dogefied element itself, not a doge.
+		 * @return: the dogefied element.
+		 */
+		whoAmI: function() {
+			return elem;
 		}
 	};
 
@@ -577,7 +607,7 @@ function Dogefy(elem, options) {
 		// prepare texts to classify
 		for(i = 0; i < allTxt.length; i++) {
 			var resultList = allTxt[i]
-				.split(/[\,\.\!\\\/\;\?\'\"\@\#\$\%\&\*\(\)\-\_\=\+\^\~\]\[\{\}\:\>\<']+/)
+				.split(/[\,\.\!\\\/\;\?\'\"\@\#\$\%\&\*\(\)\-\_\=\+\^\~\]\[\{\}\:\>\<]+/)
 								.filter(function(val) {
 									return val.match(/([A-Za-z])\w+/g);
 								});
