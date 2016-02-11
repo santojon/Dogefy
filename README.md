@@ -1,4 +1,4 @@
-| <h1>Dogefy</h1> **v0.1 (beta)** |
+| <h1>Dogefy</h1> **v0.2 (beta)** |
 :-----------------:
 | A JS lib to make your DOM bark! |
 | <img src="screenshot.jpg" title="Dogefy screenshot"/> |
@@ -166,7 +166,7 @@ To prevent the barks to hides itself, set this to **-1**, like:
 > });
 > ```
 
-#### 8. barkOn, manyBarkOn and clearOn
+#### 8. barkOn, manyBarkOn, adaptOn and clearOn
 The postfix **'on'** in these options mean a link with javascript events.  
 You can set this like:
 
@@ -187,7 +187,7 @@ or with a list of events:
 These means the chosen event(s) will be bounded with the dogefied element.  
 The main difference between then is **the action after the event fires** (clear, bark or manyBark).
 
-#### 9. barkFrom, manyBarkFrom and clearFrom
+#### 9. barkFrom, manyBarkFrom, adaptFrom and clearFrom
 The postfix **'from'** in these options mean a link to another element.  
 You can set this like:
 
@@ -201,7 +201,7 @@ These means the chosen element will be bounded with the selected doge event (cle
 When you click in the element you pass in option, your doge will react with the action you choose.  
 You can pass **only one** element on these options.
 
-#### 10. barkWhen, manyBarkWhen and clearWhen
+#### 10. barkWhen, manyBarkWhen, adaptWhen and clearWhen
 The postfix **'when'** in these options mean you can pass a function as value.  
 You can set this like:
 
@@ -220,6 +220,19 @@ You can pass the function you want. The only concern is that function have to re
 **The callback must be the only parameter of the function!**
 The callback will be the selected doge event (clear, bark or manyBark).  
 With this you can set straight conditions for each doge event.
+
+#### 11. adaptive
+This can be set to **true** or **false**. The default is **false**.  
+You can set this like:
+
+> ```javascript
+>  var doge = $('#your_doge').dogefy({
+> 		adaptive: true
+>  }
+> });
+> ```
+
+This make your doge adapt its language to the page, using the page words and expressions.
 
 
 ## Methods
@@ -304,6 +317,23 @@ You can set a single property to reset:
 > doge.userDefaults('colors');
 > ```
 
+#### 8. uniqueWords()
+A manner to make your doge vocabulary non repeated.  
+All 'word' properties will be filtered to don't have repeated words.
+
+> ```javascript
+> doge.uniqueWords();
+> ```
+
+#### 9. adapt()
+Adapt the doge vocabulary.  
+All 'word' properties can be updated with words and expressions of the page.  
+The names of the fonts you use will be added to doge vocabulary too.
+
+> ```javascript
+> doge.adapt();
+> ```
+
 
 ## Examples
 Dogefy was built to be personalized.  
@@ -360,7 +390,9 @@ Like this:
 > 		firstWords: ['very', 'not', 'go'],
 > 		lastWords: ['common', 'dogefy', 'bark'],
 > 		colors: ['red', 'yellow', 'blue', 'green', 'black', '#ffcc00'],
-> 		clearOn: ['load', 'mouseout']
+> 		clearOn: ['load', 'mouseout'],
+> 		shadow: true,
+> 		adaptive: true
 >  });
 >```
 

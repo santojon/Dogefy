@@ -8,7 +8,7 @@
 //                                                                          //
 // http://www.apache.org/licenses/LICENSE-2.0                               //
 //                                                                          //
-// or in file 'LICENSE.txt' on roort of this project.                       //
+// or in file 'LICENSE' on root of this project.                            //
 //                                                                          //
 // Unless required by applicable law or agreed to in writing, software      //
 // distributed under the License is distributed on an "AS IS" BASIS,        //
@@ -53,17 +53,17 @@ function Dogefy(elem, options) {
 	// the doge properties setted as default
 	var defaultOptions = {
 		fullWords: [
-			'wow', 'amaze', 'cool', 'exite', '/10', 'oh my doge', 'helvetica',
-			'awesome', 'great', 'swag'
+			'wow', 'amaze', 'cool', 'exite', '/10', 'oh my doge', 'awesome',
+			'great', 'swag'
 		],
 		firstWords: [
-			'such', 'so', 'very', 'many', 'want', 'need', 'plz', 'go', 'yes'
+			'such', 'so', 'very', 'many', 'want', 'need', 'plz', 'go'
 		],
 		lastWords: [
 			'dangerous', 'code', 'bark', 'doge', 'dogefy', 'generate', 'clear',
-			'full', 'cute', 'word', 'sit', 'free', 'design', 'txt', 'phrase',
-			'master', 'layout', 'coin', 'clone', 'meme', 'colorfull', 'random',
-			'fun', 'pixel', 'prorotype', 'meta'
+			'full', 'cute', 'word', 'sit', 'free', 'design', 'master', 'layout',
+			'coin', 'clone', 'meme', 'colorfull', 'random', 'fun', 'pixel',
+			'prorotype', 'meta', 'beta'
 		],
 		colors: [
 			'red', 'yellow', 'green', 'blue', 'purple', 'orange', 'gray', 'aqua',
@@ -88,7 +88,11 @@ function Dogefy(elem, options) {
 		clearWhen: noop,
 		shadow: false,
 		shadowColor: 'black',
-		zIndexes: ['999']
+		zIndexes: ['999'],
+		adaptive: false,
+		adaptOn: undefined,
+		adaptFrom: undefined,
+		adaptWhen: noop
 	};
 	var options = defaultOptions;
 
@@ -125,8 +129,43 @@ function Dogefy(elem, options) {
 					fonts: userOptions.fonts || defaultOptions.fonts,
 					shadow: userOptions.shadow || defaultOptions.shadow,
 					shadowColor: userOptions.shadowColor || defaultOptions.shadowColor,
-					zIndexes: userOptions.zIndexes || defaultOptions.zIndexes
+					zIndexes: userOptions.zIndexes || defaultOptions.zIndexes,
+					adaptive: userOptions.adaptive || defaultOptions.adaptive,
+					adaptWhen: userOptions.adaptWhen || defaultOptions.adaptWhen,
+					adaptOn: userOptions.adaptOn || defaultOptions.adaptOn,
+					adaptFrom: userOptions.adaptFrom || defaultOptions.adaptFrom
 				};
+			}
+
+			if (options.adaptive) {
+				this.put('fullWords', getAllProcessedText().full);
+				this.put('fullWords', options.fonts);
+				this.put('firstWords', getAllProcessedText().first);
+				this.put('lastWords', getAllProcessedText().last);
+
+				if (options.adaptFrom) {
+					options.adaptFrom.addEventListener('click', function() {
+						adapt();
+					});
+				}
+
+				if (options.adaptWhen) {
+					options.adaptWhen(adapt);
+				}
+
+				if (options.adaptOn) {
+					if (options.adaptOn instanceof Array) {
+						for (var i = 0; i < options.adaptOn.length; i++) {
+							elem.addEventListener(options.adaptOn[i], function() {
+								adapt();
+							});
+						}
+					} else {
+						elem.addEventListener(options.adaptOn, function() {
+							adapt();
+						});
+					}
+				}
 			}
 
 			// set bark triggers
@@ -264,10 +303,32 @@ function Dogefy(elem, options) {
 			return this;
 		},
 		/**
+		 * Make all words list unique valued.
+		 * @return: the doge, modified.
+		 */
+		uniqueWords: function() {
+			options.fullWords = uniqueValues(options.fullWords);
+			options.firstWords = uniqueValues(options.firstWords);
+			options.lastWords = uniqueValues(options.lastWords);
+
+			return this;
+		},
+		/**
 		 * Clear many barks to make all more clear.
 		 */
 		clearBarks: function() {
 			clearBarks();
+		},
+		/**
+		 * Adapt doge language to this page.
+		 */
+		adapt: function() {
+			this.put('fullWords', getAllProcessedText().full);
+			this.put('fullWords', options.fonts);
+			this.put('firstWords', getAllProcessedText().first);
+			this.put('lastWords', getAllProcessedText().last);
+
+			return this.uniqueWords();
 		},
 		/**
 		 * Reset doge to original values.
@@ -306,7 +367,6 @@ function Dogefy(elem, options) {
 			return this;
 		}
 	};
-
 
 
 
@@ -394,7 +454,7 @@ function Dogefy(elem, options) {
 				}, options.barkInterval);
 			}
 		}
-	}
+	};
 
 	/**
 	 * Clear all the barks possible to get.
@@ -404,7 +464,14 @@ function Dogefy(elem, options) {
 		for (var i = 0; i < p.length; i++) {
 			p[i].parentNode.removeChild(p[i]);
 		}
-	}
+	};
+
+	/**
+	 * Adapts doge language to page.
+	 */
+	var adapt = function() {
+		doge.prototype.adapt();
+	};
 
 
 	
@@ -416,6 +483,11 @@ function Dogefy(elem, options) {
 	 */
 
 
+			 /**
+			  * ----------------------------------------
+			  * STYLE RELATED
+			  * ----------------------------------------
+			  */
 
 	 /**
 	 * Formats the doge phrase to show.
@@ -452,7 +524,7 @@ function Dogefy(elem, options) {
 		applyStyle(css, node);
 
 		return node;
-	}
+	};
 
 	/**
 	 * Fix position of a bark recently drawed in screen.
@@ -464,7 +536,7 @@ function Dogefy(elem, options) {
 			left: randomInt(pos.left, pos.right - node.clientWidth) + 'px'
 		};
 		applyStyle(css, node);
-	}
+	};
 
 	/**
 	 * Apply a css style to a given node.
@@ -475,7 +547,118 @@ function Dogefy(elem, options) {
 		for(i in css){
 		   node.style[i] = css[i];
 		}
-	}
+	};
+
+
+			/**
+			 * ----------------------------------------
+			 * TEXT ADAPTION RELATED
+			 * ----------------------------------------
+			 */
+
+	/**
+	 * Get the text from all elements in page body, processed as subtexts.
+	 * @return: a list with all texts.
+	 */
+	var getAllProcessedText = function() {
+		// all results
+		var result = [];
+
+		// the place for processed results
+		var processedResult = {
+			full: [],
+			first: [],
+			last: []
+		};
+
+		// text to process
+		var allTxt = getAllText();
+
+		// prepare texts to classify
+		for(i = 0; i < allTxt.length; i++) {
+			var resultList = allTxt[i]
+				.split(/[\,\.\!\\\/\;\?\'\"\@\#\$\%\&\*\(\)\-\_\=\+\^\~\]\[\{\}\:\>\<']+/)
+								.filter(function(val) {
+									return val.match(/([A-Za-z])\w+/g);
+								});
+			var resultList2 = allTxt[i]
+				.split(/[\s\,\.\!\\\/\;\?\'\"\@\#\$\%\&\*\(\)\-\_\=\+\^\~\]\[\{\}\:\>\<]+/)
+									.filter(function(val) {
+										return val.match(/([A-Za-z])\w+/g);
+									});
+
+			for(j = 0; j < resultList.length; j++) {
+				if (resultList[j].trim().length < 21) {
+					result.push(resultList[j].trim().toLowerCase());
+				}
+			}
+
+			for(j = 0; j < resultList2.length; j++) {
+				if (resultList2[j].trim().length < 21) {
+					result.push(resultList2[j].trim().toLowerCase());
+				}
+			}
+		}
+
+		// make this unique
+		result = uniqueValues(result);
+
+		// put texts in right places
+		for(i = 0; i < result.length; i++) {
+			if (result[i].length < 3) {
+				processedResult.first.push(result[i]);
+			} else if (result[i].split(/\s/).length > 1) {
+				processedResult.full.push(result[i]);
+			} else {
+				if (result[i].length < 4 && !inList(result[i], ['wow', 'txt', 'sit'])) {
+					processedResult.first.push(result[i]);
+				} else if (inList(result[i], ['wow'])) {
+					processedResult.full.push(result[i]);
+				} else {
+					processedResult.last.push(result[i]);
+				}
+			}
+		}
+
+		// the result
+		return processedResult;
+	};
+
+	/**
+	 * Get the text from all elements in page body.
+	 * @return: a list with all texts.
+	 */
+	var getAllText = function() {
+		var allText = [document.title, 'adaptive'];
+
+		// get all except script
+	    var elements = document.body.getElementsByTagName('*');
+	    
+	    for(var i = 0; i < elements.length; i++) {
+	       var current = elements[i];
+	       // Check the element has no children && that it is not empty
+	       if(current.children.length === 0 &&
+	       			current.textContent.replace(/ |\n\r/g,'') !== '') {
+
+	       		// get it only if is not a script or code block
+	       		if (current.outerHTML.indexOf('<script') < 0) {
+	       			if (current.outerHTML.indexOf('<code') < 0) {
+		       			var txt = current.textContent;
+		          		allText.push(txt);
+		          	}
+	       		}
+	       }
+	    }
+
+	    return allText;
+	};
+
+
+			/**
+			 * ----------------------------------------
+			 * AUXILIARS FOR ALL FUNCTIONS
+			 * ----------------------------------------
+			 */
 
 	/**
 	 * Auxiliar method to randomize doge barks and things.
@@ -488,6 +671,17 @@ function Dogefy(elem, options) {
 	};
 
 	/**
+	 * Method to get a list of unique values.
+	 * @param lst: the list to get unique values.
+	 * @return: a list with unique values.
+	 */
+	var uniqueValues = function (lst) {
+	    return lst.sort().filter(function(item, pos, array) {
+	        return !pos || item != array[pos - 1];
+	    })
+	};
+
+	/**
 	 * The names of all doge properties.
 	 * @return: all the properties names.
 	 */
@@ -496,7 +690,8 @@ function Dogefy(elem, options) {
 			'fullWords', 'firstWords', 'lastWords', 'colors', 'barkInterval',
 			'barkOn', 'barkWhen', 'barkDelay', 'barkFrom', 'barkDuration',
 			'manyBarkOn', 'manyBarkWhen', 'manyBarkFrom', 'clearOn', 'clearWhen',
-			'clearFrom', 'fonts', 'sizes', 'shadow', 'shadowColor', 'zIndexes'
+			'clearFrom', 'fonts', 'sizes', 'shadow', 'shadowColor', 'zIndexes',
+			'adaptive'
 		];
 	};
 
@@ -517,7 +712,7 @@ function Dogefy(elem, options) {
 	 * @param lst: the list to search.
 	 * @return: true if exists, false otherwise.
 	 */
-	var inLinst = function(val, lst) {
+	var inList = function(val, lst) {
 		return lst.indexOf(val) > -1;
 	};
 
@@ -527,7 +722,7 @@ function Dogefy(elem, options) {
 	 * @return: true if exists, false otherwise.
 	 */
 	var existsProp = function(prop) {
-		return inLinst(prop, propNames());
+		return inList(prop, propNames());
 	};
 
 	/**
@@ -536,7 +731,7 @@ function Dogefy(elem, options) {
 	 * @return: true if exists, false otherwise.
 	 */
 	var existsListProp = function (prop) {
-		return inLinst(prop, listPropNames());
+		return inList(prop, listPropNames());
 	};
 
 	// return the Doge object

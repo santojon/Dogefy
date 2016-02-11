@@ -16,7 +16,7 @@
 		<button id="btn" class="btn">Bark once!</button>
 		<button id="btn2" class="btn">Bark a lot!</button>
 		<button id="btn3" class="btn btn-red">Clear some barks</button>
-		<script type="text/javascript" src="../../dist/dogefy.min.js"></script>
+		<script type="text/javascript" src="../../dogefy.js"></script>
 		<script type="text/javascript">
 			(function() {
 				// Alternate method
@@ -47,7 +47,9 @@
 					},
 					sizes: ['12', '20', '30', '42'],
 					fonts: ['Calibri', 'Impact', 'Arial', 'Times New Roman', 'Comic Sans MS'],
-					shadow: true
+					shadow: true,
+					adaptive: true,
+					adapOn: 'DOMSubtreeModified'
 				});
 
 			   	// Default method
@@ -75,7 +77,7 @@
 				//}).init();
 
 				// This will reset the doge
-				//doge.defaults();
+				// doge.defaults();
 			})();
 		</script>
 	</body>
