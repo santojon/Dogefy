@@ -235,7 +235,7 @@ This make your doge adapt its language to the page, using the page words and exp
 The first method to be called when creating a doge.  
 This sets up a doge, to be totally usefull.  
 Returns a your doge, fully usefull.  
-\***You don't need to use it. Dogefy returns initislised doges.**
+\***You don't need to use it. Dogefy returns initislised doges.**  
 This method return the doge, initialized.  
 All other methods works **on initialized doges**.
 
