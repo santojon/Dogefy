@@ -166,7 +166,7 @@ To prevent the barks to hides itself, set this to **-1**, like:
 > });
 > ```
 
-#### 8. barkOn, manyBarkOn and clearOn
+#### 8. barkOn, manyBarkOn, adaptOn and clearOn
 The postfix **'on'** in these options mean a link with javascript events.  
 You can set this like:
 
@@ -187,7 +187,7 @@ or with a list of events:
 These means the chosen event(s) will be bounded with the dogefied element.  
 The main difference between then is **the action after the event fires** (clear, bark or manyBark).
 
-#### 9. barkFrom, manyBarkFrom and clearFrom
+#### 9. barkFrom, manyBarkFrom, adaptFrom and clearFrom
 The postfix **'from'** in these options mean a link to another element.  
 You can set this like:
 
@@ -201,7 +201,7 @@ These means the chosen element will be bounded with the selected doge event (cle
 When you click in the element you pass in option, your doge will react with the action you choose.  
 You can pass **only one** element on these options.
 
-#### 10. barkWhen, manyBarkWhen and clearWhen
+#### 10. barkWhen, manyBarkWhen, adaptWhen and clearWhen
 The postfix **'when'** in these options mean you can pass a function as value.  
 You can set this like:
 
