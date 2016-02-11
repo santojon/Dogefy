@@ -89,7 +89,10 @@ function Dogefy(elem, options) {
 		shadow: false,
 		shadowColor: 'black',
 		zIndexes: ['999'],
-		adaptive: false
+		adaptive: false,
+		adaptOn: undefined,
+		adaptFrom: undefined,
+		adaptWhen: noop
 	};
 	var options = defaultOptions;
 
@@ -127,7 +130,10 @@ function Dogefy(elem, options) {
 					shadow: userOptions.shadow || defaultOptions.shadow,
 					shadowColor: userOptions.shadowColor || defaultOptions.shadowColor,
 					zIndexes: userOptions.zIndexes || defaultOptions.zIndexes,
-					adaptive: userOptions.adaptive || defaultOptions.adaptive
+					adaptive: userOptions.adaptive || defaultOptions.adaptive,
+					adaptWhen: userOptions.adaptWhen || defaultOptions.adaptWhen,
+					adaptOn: userOptions.adaptOn || defaultOptions.adaptOn,
+					adaptFrom: userOptions.adaptFrom || defaultOptions.adaptFrom
 				};
 			}
 
@@ -137,9 +143,29 @@ function Dogefy(elem, options) {
 				this.put('firstWords', getAllProcessedText().first);
 				this.put('lastWords', getAllProcessedText().last);
 
-				document.body.addEventListener('DOMSubtreeModified', function() {
-					this.adapt();
-				});
+				if (options.adaptFrom) {
+					options.adaptFrom.addEventListener('click', function() {
+						adapt();
+					});
+				}
+
+				if (options.adaptWhen) {
+					options.adaptWhen(adapt);
+				}
+
+				if (options.adaptOn) {
+					if (options.adaptOn instanceof Array) {
+						for (var i = 0; i < options.adaptOn.length; i++) {
+							elem.addEventListener(options.adaptOn[i], function() {
+								adapt();
+							});
+						}
+					} else {
+						elem.addEventListener(options.adaptOn, function() {
+							adapt();
+						});
+					}
+				}
 			}
 
 			// set bark triggers
@@ -297,7 +323,6 @@ function Dogefy(elem, options) {
 		 * Adapt doge language to this page.
 		 */
 		adapt: function() {
-			console.log('adapting...');
 			this.put('fullWords', getAllProcessedText().full);
 			this.put('fullWords', options.fonts);
 			this.put('firstWords', getAllProcessedText().first);
@@ -342,7 +367,6 @@ function Dogefy(elem, options) {
 			return this;
 		}
 	};
-
 
 
 
@@ -430,7 +454,7 @@ function Dogefy(elem, options) {
 				}, options.barkInterval);
 			}
 		}
-	}
+	};
 
 	/**
 	 * Clear all the barks possible to get.
@@ -440,7 +464,14 @@ function Dogefy(elem, options) {
 		for (var i = 0; i < p.length; i++) {
 			p[i].parentNode.removeChild(p[i]);
 		}
-	}
+	};
+
+	/**
+	 * Adapts doge language to page.
+	 */
+	var adapt = function() {
+		doge.prototype.adapt();
+	};
 
 
 	
@@ -493,7 +524,7 @@ function Dogefy(elem, options) {
 		applyStyle(css, node);
 
 		return node;
-	}
+	};
 
 	/**
 	 * Fix position of a bark recently drawed in screen.
@@ -505,7 +536,7 @@ function Dogefy(elem, options) {
 			left: randomInt(pos.left, pos.right - node.clientWidth) + 'px'
 		};
 		applyStyle(css, node);
-	}
+	};
 
 	/**
 	 * Apply a css style to a given node.
@@ -516,7 +547,7 @@ function Dogefy(elem, options) {
 		for(i in css){
 		   node.style[i] = css[i];
 		}
-	}
+	};
 
 
 			/**
@@ -591,14 +622,14 @@ function Dogefy(elem, options) {
 
 		// the result
 		return processedResult;
-	}
+	};
 
 	/**
 	 * Get the text from all elements in page body.
 	 * @return: a list with all texts.
 	 */
 	var getAllText = function() {
-		var allText = [document.title];
+		var allText = [document.title, 'adaptive'];
 
 		// get all except script
 	    var elements = document.body.getElementsByTagName('*');
@@ -620,7 +651,7 @@ function Dogefy(elem, options) {
 	    }
 
 	    return allText;
-	}
+	};
 
 
 			/**
