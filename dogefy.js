@@ -106,7 +106,7 @@ function Dogefy(elem, options) {
 	doge.prototype = {
 		/**
 		 * Function responsible to setup doge.
-		 * @return: the doge, initialized.
+		 * @return: the doge, initialised.
 		 */
 		init: function() {
 			// set options
@@ -283,7 +283,7 @@ function Dogefy(elem, options) {
 		/**
 		 * Main function of doge. Make it barks.
 		 * Call it on $your_doge.bark();.
-		 * It ill respond with a doge phrase.
+		 * It will respond with a doge phrase.
 		 */
 		bark: function() {
 			bark();
@@ -291,7 +291,7 @@ function Dogefy(elem, options) {
 		/**
 		 * Main function of doge for repeated barks. Make it barks a lot.
 		 * Call it on $your_doge.manyBark();
-		 * It ill respond with a bunch of doge phrases.
+		 * It will respond with a bunch of doge phrases.
 		 */
 		manyBark: function() {
 			manyBark();
@@ -382,7 +382,7 @@ function Dogefy(elem, options) {
 		},
 		/**
 		 * Reset doge to original values.
-		 * This can be used to reset an previously initialized doge.
+		 * This can be used to reset an previously initialised doge.
 		 * @param prop: the property to set defaults.
 		 * @return: the doge, reseted.
 		 */
@@ -400,7 +400,7 @@ function Dogefy(elem, options) {
 		},
 		/**
 		 * Reset doge to original user values.
-		 * This can be used to reset an previously initialized doge.
+		 * This can be used to reset an previously initialised doge.
 		 * @param prop: the property to set defaults.
 		 * @return: the doge, reseted.
 		 */
@@ -419,13 +419,13 @@ function Dogefy(elem, options) {
 		/**
 		 * Method used to clone doge from its default place to another.
 		 * @param el: the element to place new cloned doge.
-		 * @return: a new initialized doge, with same options, but placed in another element.
+		 * @return: a new initialised doge, with same options, but placed in another element.
 		 */
 		cloneTo: function(el) {
-			return new Dogefy(el, options).init();
+			return new Dogefy(el, options);
 		},
 		/**
-		 * Saves the actual options to userOptions.
+		 * Saves the current options to userOptions.
 		 * @return: the doge, modified.
 		 */
 		saveOptions: function() {
@@ -434,7 +434,7 @@ function Dogefy(elem, options) {
 		},
 		/**
 		 * To get the current options.
-		 * @return: the actual options object.
+		 * @return: the current options object.
 		 */
 		getOptions: function() {
 			return options;
@@ -743,7 +743,7 @@ function Dogefy(elem, options) {
 
 			/**
 			 * ----------------------------------------
-			 * AUXILIARS FOR ALL FUNCTIONS
+			 * AUXILIARY METHODS FOR ALL FUNCTIONS
 			 * ----------------------------------------
 			 */
 
@@ -822,18 +822,18 @@ function Dogefy(elem, options) {
 		return inList(prop, listPropNames());
 	};
 
-	// return the Doge object
-	return doge.prototype;
+	// return the Doge object, initialised
+	return doge.prototype.init();
 }
 
 /**
  * Needed to make any element a doge with $elem.dogefy();.
  * Make sure the $elem is really a DOM Node.
  * With this, we can dogefy any element in the screen as default.
- * @return: dogefy() will return an initialized doge.
+ * @return: dogefy() will return an initialised doge.
  */
 (function() {
 	Node.prototype.dogefy = function(options) {
-		return new Dogefy(this, options).init();
+		return new Dogefy(this, options);
 	}
 })();
