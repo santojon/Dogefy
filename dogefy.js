@@ -92,7 +92,10 @@ function Dogefy(elem, options) {
 		adaptive: false,
 		adaptOn: undefined,
 		adaptFrom: undefined,
-		adaptWhen: noop
+		adaptWhen: noop,
+		clearAllFrom: undefined,
+		clearAllOn: undefined,
+		clearAllWhen: noop
 	};
 	var options = defaultOptions;
 
@@ -133,10 +136,14 @@ function Dogefy(elem, options) {
 					adaptive: userOptions.adaptive || defaultOptions.adaptive,
 					adaptWhen: userOptions.adaptWhen || defaultOptions.adaptWhen,
 					adaptOn: userOptions.adaptOn || defaultOptions.adaptOn,
-					adaptFrom: userOptions.adaptFrom || defaultOptions.adaptFrom
+					adaptFrom: userOptions.adaptFrom || defaultOptions.adaptFrom,
+					clearAllFrom: userOptions.clearAllFrom || defaultOptions.clearAllFrom,
+					clearAllWhen: userOptions.clearAllWhen || defaultOptions.clearAllWhen,
+					clearAllOn: userOptions.clearAllOn || defaultOptions.clearAllOn
 				};
 			}
 
+			// adaptive things
 			if (options.adaptive) {
 				this.put('fullWords', getAllProcessedText().full);
 				this.put('fullWords', options.fonts);
@@ -188,6 +195,17 @@ function Dogefy(elem, options) {
 				options.clearFrom.addEventListener('click', function() {
 					clearBarks();
 				});
+			}
+
+			// set clear all thiggers
+			if (options.clearAllFrom) {
+				options.clearAllFrom.addEventListener('click', function() {
+					clearAllBarks();
+				});
+			}
+
+			if (options.clearAllWhen) {
+				options.clearAllWhen(clearAllBarks);
 			}
 
 			// if have interval, set many barks triggers
@@ -242,6 +260,20 @@ function Dogefy(elem, options) {
 				} else {
 					elem.addEventListener(options.clearOn, function() {
 						clearBarks();
+					});
+				}
+			}
+
+			if (options.clearAllOn) {
+				if (options.clearAllOn instanceof Array) {
+					for (var i = 0; i < options.clearAllOn.length; i++) {
+						elem.addEventListener(options.clearAllOn[i], function() {
+							clearAllBarks();
+						});
+					}
+				} else {
+					elem.addEventListener(options.clearAllOn, function() {
+						clearAllBarks();
 					});
 				}
 			}
@@ -318,6 +350,24 @@ function Dogefy(elem, options) {
 		 */
 		clearBarks: function() {
 			clearBarks();
+		},
+		/**
+		 * Used to clear all barks in screen.
+		 */
+		clearAllBarks: function() {
+			var p = document.getElementsByClassName('phrase');
+			for(i = 0; i < p.length; i++) {
+				clearBarks();
+				if (i === (p.length - 1)) {
+					p = document.getElementsByClassName('phrase');
+					i = 0;
+				}
+			}
+
+			// if is not all clear yet
+			if (p && p.length > 0) {
+				this.clearAllBarks();
+			}
 		},
 		/**
 		 * Adapt doge language to this page.
@@ -487,13 +537,20 @@ function Dogefy(elem, options) {
 	};
 
 	/**
-	 * Clear all the barks possible to get.
+	 * Clear some barks from screen.
 	 */
 	var clearBarks = function() {
 		var p = document.getElementsByClassName('phrase');
 		for (var i = 0; i < p.length; i++) {
 			p[i].parentNode.removeChild(p[i]);
 		}
+	};
+
+	/**
+	 * Clear all barks in screen.
+	 */
+	var clearAllBarks = function() {
+		doge.prototype.clearAllBarks();
 	};
 
 	/**
@@ -721,7 +778,8 @@ function Dogefy(elem, options) {
 			'barkOn', 'barkWhen', 'barkDelay', 'barkFrom', 'barkDuration',
 			'manyBarkOn', 'manyBarkWhen', 'manyBarkFrom', 'clearOn', 'clearWhen',
 			'clearFrom', 'fonts', 'sizes', 'shadow', 'shadowColor', 'zIndexes',
-			'adaptive', 'adaptFrom', 'adaptWhen', 'adaptOn'
+			'adaptive', 'adaptFrom', 'adaptWhen', 'adaptOn', 'clearAllFrom',
+			'clearAllOn', 'clearAllWhen'
 		];
 	};
 
@@ -732,7 +790,7 @@ function Dogefy(elem, options) {
 	var listPropNames = function() {
 		return [
 			'fullWords', 'firstWords', 'lastWords', 'colors', 'barkOn', 'clearOn',
-			'manyBarkOn', 'fonts', 'sizes', 'zIndexes', 'adaptOn'
+			'manyBarkOn', 'fonts', 'sizes', 'zIndexes', 'adaptOn', 'clearAllOn'
 		];
 	};
 
