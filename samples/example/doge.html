@@ -18,67 +18,37 @@
 		<button id="btn3" class="btn btn-red">Clear some barks</button>
 		<script type="text/javascript" src="../../dogefy.js"></script>
 		<script type="text/javascript">
-			(function() {
-				// Alternate method
-			   	var doge = document.getElementById('doge').dogefy({
-					barkOn: ['click', 'mouseover'],
-					barkDelay: 50,
-					barkInterval: 500,
-					barkDuration: -1,
-					barkFrom: document.getElementById('btn'),
-					clearWhen: function(callBack) {
-						var btn = document.getElementById('btn3');
-						btn.addEventListener('click', function() {
-							callBack();
-						});
-					},
-					manyBarkWhen: function(callBack) {
-						var alot = document.getElementById('btn2');
-						alot.addEventListener('click', function() {
-							if (alot.innerHTML === 'Bark a lot!') {
-								alot.innerHTML = 'Stop barking!';
-								alot.style.backgroundColor = 'red';
-							} else {
-								alot.innerHTML = 'Bark a lot!';
-								alot.style.backgroundColor = 'green';
-							}
-							callBack();
-						});
-					},
-					sizes: ['12', '20', '30', '42'],
-					fonts: ['Calibri', 'Impact', 'Arial', 'Times New Roman', 'Comic Sans MS'],
-					shadow: true,
-					adaptive: true,
-					adapOn: 'DOMSubtreeModified'
-				});
-
-			   	// Default method
-				//var doge = new Dogefy(document.getElementById('doge'), {
-				//	barkOn: ['click', 'change', 'mouseover', 'mouseout', 'keydown', 'load'],
-				//	barkDelay: 50,
-				//	barkInterval: 500,
-				//	barkDuration: -1,			// forever
-				//	barkFrom: document.getElementById('btn'),
-				//	clearFrom: document.getElementById('btn3'),
-				//	manyBarkWhen: function(callBack) {
-				//		var alot = document.getElementById('btn2');
-				//		alot.addEventListener('click', function() {
-				//			if (alot.innerHTML === 'Bark a lot!') {
-				//				alot.innerHTML = 'Stop barking!';
-				//				alot.style.backgroundColor = 'red';
-				//			} else {
-				//				alot.innerHTML = 'Bark a lot!';
-				//				alot.style.backgroundColor = 'green';
-				//			}
-				//			callBack();
-				//		});
-				//	}
-				//	//fullWords: ['none', 'nope', 'not']
-				//});
-
-				// This will reset the doge
-				// doge.defaults();
-			})();
+		   	var doge = document.getElementById('doge').dogefy({
+				barkOn: ['click', 'mouseover'],
+				barkDelay: 50,
+				barkInterval: 500,
+				barkDuration: -1,
+				barkFrom: document.getElementById('btn'),
+				clearWhen: function(callBack) {
+					var btn = document.getElementById('btn3');
+					btn.addEventListener('click', function() {
+						callBack();
+					});
+				},
+				manyBarkWhen: function(callBack) {
+					var alot = document.getElementById('btn2');
+					alot.addEventListener('click', function() {
+						if (alot.innerHTML === 'Bark a lot!') {
+							alot.innerHTML = 'Stop barking!';
+							alot.style.backgroundColor = 'red';
+						} else {
+							alot.innerHTML = 'Bark a lot!';
+							alot.style.backgroundColor = 'green';
+						}
+						callBack();
+					});
+				},
+				sizes: ['12', '20', '30', '42'],
+				fonts: ['Calibri', 'Impact', 'Arial', 'Times New Roman', 'Comic Sans MS'],
+				shadow: true,
+				adaptive: true,
+				adapOn: 'DOMSubtreeModified'
+			});
 		</script>
 	</body>
 </html>
