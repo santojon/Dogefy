@@ -15,11 +15,6 @@ You can make it barks a lot too! amaze!
     - Full jQuery and other frameworks compatible.
     - For usage examples, see the samples folder and pick one ( for now is a single one ;) ).
 
-
-## Licensing
-    - Apache License 2.0 (Included). See 'LICENSE' file.
-
-
 ## Usage
 You can make any DOM node a doge that barks.  
 To use it in your code, just add:
