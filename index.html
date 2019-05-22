@@ -17,7 +17,7 @@
       <a href="https://github.com/santojon/Dogefy/zipball/master" class="btn">Download .zip</a>
       <a href="https://github.com/santojon/Dogefy/tarball/master" class="btn">Download .tar.gz</a>
       <button id="dogefyBtn" class="btn">Dogefy it!</button>
-      <button id="clearBtn" class="btn" style="display: none;">Clear some barks</button>
+      <button id="clearBtn" class="btn" style="display: none;">Clear barks</button>
     </section>
 
     <section class="main-content">
@@ -470,14 +470,14 @@ Like this:</p>
 <div class="highlight highlight-source-js"><pre><span class="pl-smi">doge</span>.<span class="pl-en">defaults</span>();</pre></div>
 </blockquote>
 
-		<script type="text/javascript" src="lib/dogefy.min.js"></script>
+		<script type="text/javascript" src="dist/dogefy.min.js"></script>
 		<script type="text/javascript">
 			(function() {
 				// Alternate method
 			   	var doge = document.getElementById('doge').dogefy({
 					barkInterval: 500,
 					barkDuration: -1,
-          clearFrom: document.getElementById('clearBtn'),
+          clearAllFrom: document.getElementById('clearBtn'),
 					manyBarkWhen: function(callBack) {
 						var alot = document.getElementById('dogefyBtn');
 						alot.addEventListener('click', function() {
